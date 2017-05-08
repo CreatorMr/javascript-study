@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>js实现选项卡</title>
+	<meta charset="utf-8">
+</head>
+<style type="text/css">
+ /* CSS样式制作 */  
+     *{
+     	margin:0;
+     	padding:0;
+     	font:normal 12px "微软雅黑";
+     	color:#000000;
+     }
+     ul{
+     	list-style-type: none;
+     }
+     a{
+     	text-decoration: none;
+     }
+	#tab-list{
+		width: 275px;
+		height: 300px;
+		margin: 20px auto; 
+	}
+	#ul1{
+	  	border-bottom: 2px solid #8B4513;
+	  	height: 32px;
+	}	
+	#ul1 li{
+		display: inline-block;
+		width: 60px;
+		border: 1px solid #8B4513;
+		line-height: 30px;
+		border-bottom: none;
+		text-align: center;
+		margin-left: 5px;
+	}
+	#ul1 li:hover{
+		cursor: pointer;/*鼠标移动到上面变成小手*/
+	}
+	#ul1 li.acitve{
+		border-top: 2px solid #8B4513;
+		border-bottom: 2px solid white;
+	}
+	#tab-list div{
+		
+		border: 1px solid blue;
+		border-top: none;
+	}
+	#tab-list div li{
+		height: 30px;
+		line-height: 30px;
+		text-indent: 8px;
+	}
+	.show{
+	 	display: block;
+	 	}
+	.hide{
+	 	display: none;
+	 }
+</style>
+<script type="text/javascript">
+ window.onload = function() {
+	var oDiv = document.getElementById("tab-list");
+	var aDiv = oDiv.getElementsByTagName("div");
+	var oUl1 = document.getElementById("ul1");
+    var aLi = oUl1.getElementsByTagName("li");
+    for (var i = 0;i < aLi.length;i ++) {
+    	aLi[i].index = i; 
+    	aLi[i].onmouseover = function(){
+    		for (var i = 0; i < aLi.length; i++) {
+    			aLi[i].className = "";
+    		}
+    		this.className = "acitve";
+    		for (var i = 0; i < aDiv.length; i++) {
+    			aDiv[i].className = "hide";
+    		}
+    		aDiv[this.index].className = "show";
+    	}
+    }
+
+   		 var curtime = new Date();
+		var endtime = new Date("2017,10,10");
+		var lefttime =Math.ceil((endtime.getTime()-curtime.getTime())/(24*60*60*1000));//getTime()获取当前的毫秒数
+		var lefttime1 =Math.ceil(((endtime.getTime()-curtime.getTime())%(24*60*60*1000))/(60*60*1000));
+		var lefttime2 =Math.ceil((((endtime.getTime()-curtime.getTime())%(24*60*60*1000))%(60*60*1000))/(60*1000));
+		var lefttime3 =Math.ceil(((((endtime.getTime()-curtime.getTime())%(24*60*60*1000))%(60*60*1000))%(60*1000))/1000);
+		
+		document.getElementById('showdaojishi').innerHTML = lefttime+"天"+lefttime1+"小时"+lefttime2+"分"+lefttime3+"秒";
+		showTime();
+		
+		function checkTime(i){
+			if (i<10) {
+				i="0"+i;
+			}
+			return i;
+		}
+		function showTime(){
+		var myDate = new Date();
+		var year=myDate.getFullYear();
+		// alert(year);
+		var month=myDate.getMonth()+1;
+		var date=myDate.getDate();
+		var day=myDate.getDay();
+		var d=myDate.getDay();
+		var h=myDate.getHours();
+		var m=myDate.getMinutes();
+		var s=myDate.getSeconds();
+		m=checkTime(m);
+		s=checkTime(s);
+		var weekday=new Array(7)
+		weekday[0]="星期日"
+		weekday[1]="星期一"
+		weekday[2]="星期二"
+		weekday[3]="星期三"
+		weekday[4]="星期四"
+		weekday[5]="星期五"
+		weekday[6]="星期六"
+		document.getElementById('show').innerHTML = year+'年'+month+'月'+date+'日'+weekday[d]+h+':'+m+':'+s;
+		setTimeout(showTime,500);
+		}
+	
+}
+</script>
+<body>
+<!-- HTML页面布局 -->
+<div class="content1">
+	<div id="show">显示时间的位置</div>
+	<div id="showdaojishi">显示倒计时的位置</div>
+</div>
+<div id="tab-list">
+	<ul id="ul1">
+		<li class="acitve">First</li>
+		<li>Second</li>
+		<li>Third</li>
+	</ul>
+	<div>
+        <ul>
+            <li><a href="javascript:;">275万购昌平邻铁三居 总价20万买一居</a></li>
+            <li><a href="javascript:;">200万内购五环三居 140万安家东三环</a></li>
+            <li><a href="javascript:;">北京首现零首付楼盘 53万购东5环50平</a></li>
+            <li><a href="javascript:;">京楼盘直降5000 中信府 公园楼王现房</a></li>
+        </ul>
+    </div>
+   <div class="hide">
+        <ul>
+            <li><a href="javascript:;">40平出租屋大改造 美少女的混搭小窝</a></li>
+            <li><a href="javascript:;">经典清新简欧爱家 90平老房焕发新生</a></li>
+            <li><a href="javascript:;">新中式的酷色温情 66平撞色活泼家居</a></li>
+            <li><a href="javascript:;">瓷砖就像选好老婆 卫生间烟道的设计</a></li>
+        </ul>
+    </div>    
+    <div class="hide">
+        <ul>
+            <li><a href="javascript:;">通州豪华3居260万 二环稀缺2居250w甩</a></li>
+            <li><a href="javascript:;">西3环通透2居290万 130万2居限量抢购</a></li>
+            <li><a href="javascript:;">黄城根小学学区仅260万 121平70万抛!</a></li>
+            <li><a href="javascript:;">独家别墅280万 苏州桥2居优惠价248万</a></li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>
