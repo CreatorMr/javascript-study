@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>javascript高性能模板数据校验插件开发</title>
+	<meta charset="utf-8">
+	<style type="text/css">
+		*{
+			margin: 0;
+			padding: 0;
+			font-family: "微软雅黑";
+		}
+		.box{
+			width: 800px;
+			border: 1px solid #ddd;
+			margin: 50px auto 0;
+			padding:30px;
+		}
+	</style>
+	<link rel="stylesheet" type="text/css" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="box">
+    	<form class="data">
+    		<div class="from-group">
+    			<label for="exampleInputEmail1">邮箱</label> 
+    			<!-- 
+					不能为空
+					正则
+    			 -->
+    			<input type="email" class="form-control" id="exampleInputEmail1" placeholder="请输入合法邮箱"
+    			data-dr-required = true
+                data-dr-required-message = "邮箱不能为空"
+                data-dr-Reg = "^\w+@\w+\.\w+$"
+                data-dr-Reg-message = "邮箱不合法"
+    			>
+    		</div>
+
+    		<div class="form-group">
+    			<label for="exampleInputPassword1">手机号码</label>
+    			 <!-- 
+					不能为空
+					正则
+    			 -->
+    			<input type="text" class="form-control" id="exampleInputPassword1" placeholder="请输入合法手机号码"
+    			data-dr-required = true
+    			data-dr-required-message = "手机号码不能为空"
+    			data-dr-Reg = "^1\d{10}$"
+    			data-dr-Reg-message = "手机号码不合法"
+    			>
+    		</div>
+
+    		<div class="form-group">
+    			<label for="exampleInputPassword1">密码</label> 
+    			 <!-- 
+					不能为空
+					正则
+					限制字符的个数
+    			 -->
+    			<input type="password" class="form-control" id="exampleInputPassword1" placeholder="请输入有效密码" 
+    			data-dr-required = true
+    			data-dr-required-message = "密码不能为空"
+    			data-dr-Reg = "^\w+$"
+    			data-dr-Reg-message = "密码不合法"
+    			data-dr-min-length = 6
+    			data-dr-min-length-message = "密码不能小于6个字符"
+    			data-dr-max-length = 16
+    			data-dr-max-length-message = "密码不能大于16个字符"
+    			>
+    		</div>
+
+
+    		<div class="form-group">
+    			<label for="exampleInputPassword1">确认密码</label> 
+    			<!-- 
+					不能为空
+					confirm与密码一致
+    			 -->
+    			<input type="password" class="form-control" id="exampleInputPassword1" placeholder="请再次输入密码"
+    			data-dr-required = true
+    			data-dr-required-message = "请再次输入密码"
+    			data-dr-confirm = true
+    			data-dr-confirm -message = "两次密码输入不一致"
+    			>
+    		</div>
+    		<button type="submit" class="btn btn-default">注册</button>
+    	</form>
+    </div>
+    <script type="text/javascript" src="js/jQuery-2.2.0.min.js"></script>
+    <script type="text/javascript" src="js/dataResult.js"></script>
+    <script type="text/javascript">
+    	$("form").dataResult({
+    		initEvent:"input"
+    	});
+    	$.fn.dataResult.extendResult({
+    		//配置最大的字符长度
+    		"max-length":function(data){
+    			return this.val().length < data;
+    		}
+    	})
+    </script>
+</body>
+</html>
