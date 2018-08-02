@@ -1,0 +1,44 @@
+<template>
+  <div class="bodyDetail">
+    <div class="details padd_right60">
+        
+      <div><p>计算金额</p><p>{{morkdel.totalPrice,morkdel.discountPrice,'sub'|calculator(morkdel.totalPrice,morkdel.discountPrice,'sub')}}</p></div>
+      </div>
+     
+      
+  </div>
+</template>
+
+<script>  
+export default {
+
+  computed: {
+    
+  },
+
+  data() {
+    return {
+      morkdel：{
+        totalPrice：21.32，
+        discountPrice：9.3
+      }
+    };
+  },
+
+  methods: {
+    
+  },
+  filters: {
+    
+    
+  },
+
+  
+};
+</script>
+
+<style scoped>
+  
+</style>
+
+
