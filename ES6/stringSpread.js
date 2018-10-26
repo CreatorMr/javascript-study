@@ -43,3 +43,6 @@ for (var i = 0;i<text.length; i++) {
  'xxx'.padStart(2,'ab');//'xxx'
 
  'abc'.padStart(10,'0123456789');//'0123456abc'
+
+ String.raw()//充当模版字符串的处理函数，返回一个所有反斜杠都被转义的字符串，替换变量
+  

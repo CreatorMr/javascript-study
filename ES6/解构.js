@@ -20,7 +20,7 @@ let [foo=true] = [];//foo == true
 //ES6内部使用严格相等运算符=== 默认赋值不等undefined的时候不起作用
 
 //对象
-let [foo:foo,bar:bar] = [foo:"aaa",bar:"bbb"];
+let {foo:foo,bar:bar} = {foo:"aaa",bar:"bbb"};
 //对象的解构赋值的内部机制，先找到同名属性，然后再赋值给对应的变量。
 let [foo,bar] = ["aaa","bbb"];
 //解构赋值的规则是：只要等号右边的值不是数组或者对象，都先转成对象，undefined和null无法转成对象，所以解构赋值会报错
@@ -49,7 +49,7 @@ let jsonData = {
 	data:[867,5332]
 };
 
-let [id,status,data:number] = jsonData;
+// let [id,status,data:number] = jsonData; es6 
 //5、函数参数默认值
 
 jQuery.ajax = function(url,{
