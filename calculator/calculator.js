@@ -1,5 +1,6 @@
 /**
-	金额的加减乘
+	金额的加减乘 
+        JavaScript是64位计算
 
 */
 var CalculatorFilter = function(v1,v2,type){
@@ -30,8 +31,11 @@ Calculator = {
 		}
 		m = Math.pow(10, Math.max(r1, r2));
 		console.log((v1 * m) + (v2 * m))
-		v1 = parseInt(v1*m);
-		v2 = parseInt(v2*m);
+		//不使用自身方法乘法仍然会出现问题，使用自身方法
+		//v1 = parseInt(v1*m);
+		//v2 = parseInt(v2*m);
+		v1 = Calculator(v1,m,'mul')
+		v2 = Calculator(v2,m,'mul')
 		
 		return (v1 + v2) / m;
 	},
