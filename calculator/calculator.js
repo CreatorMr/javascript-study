@@ -30,8 +30,8 @@ Calculator = {
 		}
 		m = Math.pow(10, Math.max(r1, r2));
 		console.log((v1 * m) + (v2 * m))
-		v1 = parseInt(v1*m);
-		v2 = parseInt(v2*m);
+		v1 = calculatorFilter(v1, m, 'mul');
+      	v2 = calculatorFilter(v2, m, 'mul');
 		
 		return (v1 + v2) / m;
 	},
