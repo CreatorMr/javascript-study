@@ -1,5 +1,6 @@
 /**
-	金额的加减乘
+	金额的加减乘 
+        JavaScript是64位计算
 
 */
 var CalculatorFilter = function(v1,v2,type){
