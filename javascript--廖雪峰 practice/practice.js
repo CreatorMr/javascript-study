@@ -373,3 +373,15 @@ var t = {a:1}
 var array = []
 Object.prototype.toString.call(array)//"[object Array]"
 
+function getFunctionName(fun){
+  if(fun.name !== undefined) {
+    return fun.name;
+  }
+  debugger
+  console.log(fun)
+  var res = fun.toString()
+  console.log(res)
+}
+function test(){
+}
+console.log(getFunctionName(()=>{}))
