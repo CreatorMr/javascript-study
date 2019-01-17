@@ -1,5 +1,5 @@
 /*
-依赖jQuery数据校验插件开发,
+依赖jQuery数据校验插件开发,---腾讯课堂study
 挂在jQuery上
 */
 (function(root,factory,plug){//factory传入的工厂函数,plug接受插件名称

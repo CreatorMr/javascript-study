@@ -34,8 +34,8 @@ foo()//typeError:can not read property 'x' of undefined
 
 //指定了默认值以后，函数的length属性将返回没有指定默认值的参数个数，也就是指定了默认参数length属性将失真
 (function (a){}).length //1
-(function(a==5){}).length//0
-(function(a,y=2,z)).length//2
+(function(a=5){}).length//0
+(function(a,y=2,z){}).length//2
 
 //作用域
 //一旦设置参数的默认值，函数进行声明初始化时，参数会形成一个单独的作用域(context).等到初始化结束时，作用域就会消失。
@@ -120,15 +120,15 @@ push(a,1,2,3)
 // 箭头函数可以绑定this对象，大大减少了显式绑定this对象的写法（call、apply、bind）。但是箭头函数并非适用于所有的场景。
 // es7提出了“函数绑定”运算符::
 // 左边是一个对象，右边是一个函数，该运算符会自动将左边的对象作为上下文环境绑定到右边的函数上
-foo::bar;
+// foo::bar;
 //等同于
 bar.bind(foo);
 //由于双冒号返回的还是原对象，因此可以采用链式写法
 import {map,takeWhile,forEach} from "iterlib"
 getPlay()
-::map(x=>x.character())
-::takeWhile(x=>x.length>100)
-::forEach(x=>console.log(x));
+// ::map(x=>x.character())
+// ::takeWhile(x=>x.length>100)
+// ::forEach(x=>console.log(x));
 
 //尾调用：函数式编程的概念，指某个函数的最后一步式调用另一个函数
 
@@ -242,6 +242,6 @@ var sum = tco(function(x,y){
 	}
 })
 
-sum(1,10);
+sum(1,100000000);
 
 

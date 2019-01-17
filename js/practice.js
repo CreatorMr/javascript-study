@@ -1,3 +1,6 @@
+/* 
+  平时练或者看过的一些，记录理解的一些东西，出处有些记不清，放在这里作为笔记记录，不做商业用途，若需要注明，请评论，或者告知删
+*/
 function Foo() {
   getName = function () { 
    console.log (1); 
@@ -283,41 +286,89 @@ setTimeout(()=>{
 },0)
 new Promise((resolve,reject)=>{
     console.log('eeeee')
-    for(let i =0;i<99;i++){
-        console.log('chuce')
-        resolve();
-    }
+    // for(let i =0;i<99;i++){
+    //     console.log('chuce')
+    //     resolve();
+    // }
     console.log('sdfasd')
 }).then(()=>{
     console.log('then')
 })
+console.log('end')
+
+/* 3 4 1 */
+setTimeout(function(){
+  console.log(1);
+}, 0)
+
+Promise.resolve(function(){
+  console.log(2);
+})
+new Promise(function(resolve){
+  console.log(3);
+})
+console.log(4)
+// 结束
+
+const promise = new Promise((resolve, reject) => {
+  console.log(1);
+  resolve();
+  console.log(2);
+})
+
+promise.then(() => {
+  console.log(3);
+})
+
+console.log(4);
+// 1 2 4 3  先输出1 2 ，而 Promise.then() 内部的代码在 当次 事件循环的 结尾 立刻执行 ，所以会继续输出4，最后输出3。
+
+
+Promise.resolve(1)
+  .then(2)
+  .then(Promise.resolve(3))
+  .then(console.log)
+
+/* 
+  Promise.resolve 方法的参数如果是一个原始值，或者是一个不具有 then 方法的对象，
+  则 Promise.resolve 方法返回一个新的 Promise 对象，状态为resolved，Promise.resolve 方法的参数，会同时传给回调函数。
+  then 方法接受的参数是函数，而如果传递的并非是一个函数，它实际上会将其解释为 then(null)，这就会导致前一个 Promise 的结果会穿透下面。
+  输出  1 
+ */
 
 if([] == []) {
-  console.log('[] == [] 为' + ([] == []))
+  console.log('[] == [] 为' + ([] == [])) // false
 }
 if([1] == [1]) {
-  console.log('[1] == [1] 为' + ([1] == [1]))
+  console.log('[1] == [1] 为' + ([1] == [1])) //false
 }
 if([] === []) {
-  console.log('[] === [] 为' + ([] === []))
+  console.log('[] === [] 为' + ([] === [])) // false 
 }
 if([] == false) {
-  console.log('[] == false 为' + ([] == false))
+  console.log('[] == false 为' + ([] == false)) // true 
 }
+if([]){
+  console.log('[]是不是true' + [])
+}
+[] == true ;// false
+[] == false; // true
+[] == ![] ; //true
+[] === ![] //false
 if({} == {} ){
-  console.log('{} == {}' + " " + {}=={})
+  console.log('{} == {}' + " " + {}=={}) // false
 }
 if({a:1} == {a:1} ){
-  console.log('{a:1} == {a:1}' + " " + {a:1}=={a:1})
+  console.log('{a:1} == {a:1}' + " " + {a:1}=={a:1}) //false 
 }
 if({} == false) {
-  console.log('{} == false 为' + ({} == false))
+  console.log('{} == false 为' + ({} == false)) // false
 }
 if([] === false) {
-  console.log('[] === false 为' + ([] === false))
+  console.log('[] === false 为' + ([] === false)) // false
 }
 if({} === false) {
-  console.log('{} === false 为' + ({} === false))
+  console.log('{} === false 为' + ({} === false)) // false
 }
 /* 
  javascript 的隐式转换。比如-, *, /,和%等算术运算符都会把操作数转换成数字的，
@@ -385,3 +436,297 @@ function getFunctionName(fun){
 function test(){
 }
 console.log(getFunctionName(()=>{}))
+
+
+// 问题1：
+
+var a = 20;
+var b = a;
+b = 30;
+
+// 这时a的值是多少？
+// 问题2：
+
+var a = { name: '前端开发' }
+var b = a;
+b.name = '新改的值';
+
+// 这时a.name的值是多少
+// 问题3：
+
+var a = { name: '前端开发' }
+var b = a;
+a = null;
+
+// 这时b的值是多少
+
+// 思考题
+var a = {n: 1};
+var b = a;
+a.x = a = {n: 2};
+
+a.x 	// 这时 a.x 的值是多少 undefined
+b.x 	// 这时 b.x 的值是多少  {n:2}
+
+/* 
+参考https://github.com/yygmind/blog/issues/16解答
+*/
+// 问题一：从内存来看 null 和 undefined 本质的区别是什么？
+
+// 问题二：ES6语法中的 const 声明一个只读的常量，那为什么下面可以修改const的值？
+
+const foo = {}; 
+foo = {}; // TypeError: "foo" is read-only
+foo.prop = 123;
+foo.prop // 123
+/* 
+const实际上保证的，并不是变量的值不得改动，而是变量指向的那个内存地址所保存的数据不得改动。
+对于简单类型的数据（数值、字符串、布尔值），值就保存在变量指向的那个内存地址，因此等同于常量。
+但对于复合类型的数据（主要是对象和数组），变量指向的内存地址，保存的只是一个指向实际数据的指针，
+const只能保证这个指针是固定的（即总是指向另一个固定的地址），至于它指向的数据结构是不是可变的，
+就完全不能控制了。因此，将一个对象声明为常量必须非常小心。 */
+// 
+
+// 代码一
+var scope = "global scope";
+function checkscope(){
+    var scope = "local scope";
+    function f(){
+        return scope;
+    }
+    return f;
+}
+
+checkscope()();  
+// 代码2：
+
+var scope = "global scope";
+function checkscope(){
+    var scope = "local scope";
+    function f(){
+        return scope;
+    }
+    return f;
+}
+
+var foo = checkscope(); 
+foo();
+// 上面的两个代码中，checkscope()执行完成后，闭包f所引用的自由变量scope会被垃圾回收吗？为什么？
+
+
+//手写一个new 实现
+/* 
+在之前分析一个new的操作得到了什么
+new Person（）
+1、返回了一个对象
+2、 访问到了Person构造函数里面的属性
+3、访问到了Person原型上的属性和方法，并且改变了this的指向，指向返回的对象*/
+function create() {
+  let obj = new Object()
+  // 获取构造函数
+  let constructor = [].shift.call(arguments)
+  // 链接到原型
+  obj.__proto__ = constructor.prototype
+  // 绑定this ,执行构造函数
+  let result = constructor.apply(obj,arguments)
+  // 确保new出来得是一个对象
+  return typeof result === 'object' ? result :  obj
+}
+function Person(){}
+let c = create(Person)
+/* 
+form yygmind
+1、用new Object() 的方式新建了一个对象obj
+
+2、取出第一个参数，就是我们要传入的构造函数。此外因为 shift 会修改原数组，所以 arguments 会被去除第一个参数
+
+3、将 obj 的原型指向构造函数，这样obj就可以访问到构造函数原型中的属性
+
+4、使用 apply，改变构造函数 this 的指向到新建的对象，这样 obj 就可以访问到构造函数中的属性
+
+5、返回 obj
+
+ */
+
+function myNew (Obj,...args){
+  let obj = Object.create(Obj.prototype)
+  Obj.apply(obj,args)
+  return obj
+}
+
+//reduce --实现map
+const numbers = [10, 20, 30, 40];
+const doubledOver50 = numbers.reduce((finalList, num) => {
+  num = num * 2;
+  if (num > 50) {
+   finalList.push(num);
+  }
+  return finalList;
+}, []);
+doubledOver50; // [60, 80]
+/* 
+from yymind
+ */
+// 执行环境中  num 得所属
+var num = 1;
+var myObject = {
+    num: 2,
+    add: function() {
+        this.num = 3;
+        (function() {
+            console.log(this.num);//1
+            this.num = 4;
+        })();
+        console.log(this.num);
+    },
+    sub: function() {
+        console.log(this.num)
+    }
+}
+myObject.add();//3
+console.log(myObject.num);//3
+console.log(num);//4
+var sub = myObject.sub;
+sub();//4
+// 严格模式下，报错。TypeError: Cannot read property 'num' of undefined
+// 非严格模式下，输出：1、3、3、4、4
+
+//箭头函数
+
+var name = 'window'
+
+var person1 = {
+  name: 'person1',
+  show1: function () {
+    console.log(this.name)
+  },
+  show2: () => console.log(this.name),
+  show3: function () {
+    return function () {
+      console.log(this.name)
+    }
+  },
+  show4: function () {
+    return () => console.log(this.name)
+  }
+}
+var person2 = { name: 'person2' }
+
+person1.show1() // person1，隐式绑定，this指向调用者 person1 
+person1.show1.call(person2) // person2，显式绑定，this指向 person2
+
+person1.show2() // window，箭头函数绑定，this指向外层作用域，即全局作用域
+person1.show2.call(person2) // window，箭头函数绑定，this指向外层作用域，即全局作用域
+
+person1.show3()() // window，默认绑定，这是一个高阶函数，调用者是window
+				  // 类似于`var func = person1.show3()` 执行`func()`
+person1.show3().call(person2) // person2，显式绑定，this指向 person2
+person1.show3.call(person2)() // window，默认绑定，调用者是window
+
+person1.show4()() // person1，箭头函数绑定，this指向外层作用域，即person1函数作用域
+person1.show4().call(person2) // person1，箭头函数绑定，
+							  // this指向外层作用域，即person1函数作用域
+person1.show4.call(person2)() // person2
+
+
+var name = 'window'
+
+function Person (name) {
+  this.name = name;
+  this.show1 = function () {
+    console.log(this.name)
+  }
+  this.show2 = () => console.log(this.name)
+  this.show3 = function () {
+    return function () {
+      console.log(this.name)
+    }
+  }
+  this.show4 = function () {
+    return () => console.log(this.name)
+  }
+}
+
+var personA = new Person('personA')
+var personB = new Person('personB')
+
+personA.show1() // personA，隐式绑定，调用者是 personA
+personA.show1.call(personB) // personB，显式绑定，调用者是 personB
+
+personA.show2() // personA，首先personA是new绑定，产生了新的构造函数作用域，
+				// 然后是箭头函数绑定，this指向外层作用域，即personA函数作用域
+personA.show2.call(personB) // personA，同上 ?????????
+
+personA.show3()() // window，默认绑定，调用者是window
+personA.show3().call(personB) // personB，显式绑定，调用者是personB
+personA.show3.call(personB)() //window，默认绑定，调用者是window
+
+personA.show4()() // personA，箭头函数绑定，this指向外层作用域，即personA函数作用域
+personA.show4().call(personB) // personA，箭头函数绑定，call并没有改变外层作用域，
+                              // this指向外层作用域，即personA函数作用域
+personA.show4.call(personB)() //personB，解析同题目1，最后是箭头函数绑定，
+                             // this指向外层作用域，即改变后的person2函数作用域
+
+/* 
+题目一和题目二的区别在于题目二使用了new操作符。
+
+使用 new 操作符调用构造函数，实际上会经历一下4个步骤：
+
+创建一个新对象；
+将构造函数的作用域赋给新对象（因此this就指向了这个新对象）；
+执行构造函数中的代码（为这个新对象添加属性）；
+返回新对象。
+ */
+
+
+ //模拟实现bind
+ /* 
+ 1、可以指定this
+ 2、返回一个函数
+ 3、可以传入参数
+ 4、柯里化 */
+Function.prototype.bind2 = function(context){
+  var self = this // this 指向调用者
+  var args = Array.prototype.slice.call(arguments, 1)
+  var fNOP = function(){}
+
+  var fBound =  function(){
+    var bindArgs = Array.prototype.slice.call(arguments)
+    return self.apply(this instanceof fNOP ? this : context, args.concat(bindArgs))
+  }
+  //  原型式继承
+  fNOP.prototype = this.prototype
+  fBound.prototype = new fNOP()
+  return fBound
+}
+
+Function.prototype.bind3 = function(oThis){
+  //  拿到第一个参数，bind改变this指向的指向对象  foo.bind(bar) 即bar
+  var args = Array.prototype.slice.call(arguments,1),
+      fToBound = this,
+      fNOP = function(){}
+
+      fBound = function(){
+        return function(){
+          fToBound.apply(this instanceof fNOP ? this : oThis, args.concat(Array.prototype.slice(arguments)))
+        }
+      }
+      fNOP.prototype = this.ptototype
+      fBound.prototype = new fNOP()
+
+      return fBound;
+
+
+}
+
+var arr = [0,0,1,'a',1,2,'b','a','a'];
+var res = arr.filter(function(ele,index,array){
+    return index === array.indexOf(ele);
+});
+var array = [0,0,1,'a',1,2,'b','a','a']
+var t = [...new Set(array)]
+console.log(t)
+
+
+
+
