@@ -36,7 +36,7 @@ function normalize(arr){
     })
 }
 
-// 利用map()把字符串变成整数，他写的代码很简洁：
+// 利用map()把字符串变成整数，写的代码很简洁：
 
 'use strict';
 
