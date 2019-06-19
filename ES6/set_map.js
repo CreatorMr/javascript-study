@@ -7,7 +7,7 @@ for(let key of s){
 
 const set = new Set([1,2,3,4,4]);
 console.log(
-[...set]
+    [...set]
 )
 
 const item = new Set([1,2,3,4,5,5,5,5])

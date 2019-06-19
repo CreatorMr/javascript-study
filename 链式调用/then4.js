@@ -44,3 +44,4 @@ function newRole(name){
 }
 newRole('xx').say('hello').sleep(2000).say('hello world').exec()
 
+​

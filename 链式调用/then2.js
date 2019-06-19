@@ -2,7 +2,6 @@ class Role {
     constructor(name) {
         this.name = name;
         this.actions = [];
-
     }
 
     sleep() {
