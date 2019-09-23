@@ -30,9 +30,10 @@ Calculator = {
 		} catch (e) {
 		}
 		m = Math.pow(10, Math.max(r1, r2));
-		v1 = calculatorFilter(v1, m, 'mul');
-       v2 = calculatorFilter(v2, m, 'mul');
-		
+		//v1 = calculatorFilter(v1, m, 'mul');
+       //v2 = calculatorFilter(v2, m, 'mul');
+	v1 = Calculator(v1,m,'mul')
+		v2 = Calculator(v2,m,'mul')	
 		return (v1 + v2) / m;
 	},
 	// 减
