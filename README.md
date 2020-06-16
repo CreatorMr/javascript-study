@@ -1,6 +1,3 @@
-# Creator
-The only product you have is yourself, and it's worth your whole life polishing.
-javascript - study
 
 链式调用
 base-js  ---  一些基本的js 实现
