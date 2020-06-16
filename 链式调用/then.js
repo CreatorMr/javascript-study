@@ -55,10 +55,10 @@ console.log(newRole('xx').say('ss').exec())
 
 
 
-function newRole(name) {
-    const name = name
-    const callbacks = [];
-    const options = {}
+function newRole(name2) {
+    let name = name2
+    let callbacks = [];
+    let options = {}
     class InnerFunc {
         sleep(ms){
             setTimeout(() => {
