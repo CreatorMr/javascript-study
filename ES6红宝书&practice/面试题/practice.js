@@ -80,7 +80,7 @@ Foo函数的第一句  getName = function () { alert (1); };  是一句函数赋
 直接调用getName函数，相当于 window.getName() ，因为这个变量已经被Foo函数执行时修改了，遂结果与第三问相同，为1
 
 第五问 new Foo.getName(); ,此处考察的是js的运算符优先级问题。
-（.）的优先级高于new操作 new (Foo.getName)();
+-------（.）的优先级高于new操作 new (Foo.getName)();
 第六问 new Foo().getName() ，首先看运算符优先级括号高于new，实际执行为
 (new Foo()).getName()
 遂先执行Foo函数，而Foo此时作为构造函数却有返回值，所以这里需要说明下js中的构造函数返回值问题。
