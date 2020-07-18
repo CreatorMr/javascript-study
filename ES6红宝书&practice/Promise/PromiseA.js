@@ -1,9 +1,10 @@
-//原文出自：https://www.pandashen.com
-/*
+
+/* 
+ * https://promisesaplus.com/ promiseA+
  *构造函数的参数为一个名为 executor 的执行器， 即函数， 在创建实例时该函数内部逻辑为同步， 即立即执行
  *执行器的参数为resolve、reject
  *在 executor 执行时，一旦出现错误立即调用 reject 函数，并设置错误信息给 reason 属性
- *每个promise都有三种状态，pending、fulfilled、rejected默认状态为 pendingre
+ *每个promise都有三种状态，pending、fulfilled、rejected默认状态为 pending
  *状态只能从 pending 到 fulfilled 或从 pending 到 rejected，且不可逆
  *执行 resolve 函数会使状态从 pending 变化到 fulfilled 并将参数存入实例的 value 属性中；
  *执行 reject 函数会使状态从 pending 变化到 rejected 并将错误信息存入实例的 reason 属性中
@@ -41,14 +42,14 @@ function Promise(executor) {
 	}
 
 	try {
-		executor(resolve, reject);
+		executor(resolve, reject); // 默认执行器会立刻执行
 	} catch (e) {
 		// 如果执行器执行时出现错误，直接调用失败的函数
 		reject(e)
 	}
 
 }
-module.expotrs = Promise
+module.exports = Promise
 
 //实例上的方法的实现
 
@@ -94,9 +95,13 @@ Promise.prototype.then = function(onFulfilled, onRejected) {
             setTimeout(function () {
                 try {  // 捕获异步的异常
                     // onFulfilled 执行完返回值的处理，x 为成功回调的返回值
+                    // x 可能是普通值 ，可能是promise
                     var x = onFulfilled(this.value);
 
                     // 处理返回值单独封装一个方法
+                    /**
+                     * 判断x 值 => promise2 的状态
+                     */
                     resolvePromise(promise2, x, resolve, reject);
                 } catch (e) {
                     reject(e);
@@ -186,6 +191,7 @@ function resolvePromise(promise2, x, resolve, reject) {
 
             if (typeof then === "function") { // then 为一个方法，就当作 x 为一个 promise
                 // 执行 then，第一个参数为 this（即 x），第二个参数为成功的回调，第三个参数为失败的回调
+                // call能保证不用再次取then的结果
                 then.call(x, function (y) {
                     if (called) return;
                     called = true;
@@ -218,7 +224,7 @@ Promise.prototype.catch = function (onRejected) {
 
 //静态方法的实现
 // 1、Promise.resolve 方法的实现
-Promise.resovle = function(val){
+Promise.resolve = function(val){
 	return new Promise(function (resolve, reject) {
         resolve(val);
     });
@@ -274,5 +280,12 @@ Promise.race = function (promises) {
     });
 }
 
+Promise.prototype.finally = function (callback) {
+    let P = this.constructor;
+    return this.then(
+      value  => P.resolve(callback()).then(() => value),
+      reason => P.resolve(callback()).then(() => { throw reason })
+    );
+  };
 
 // 使用 promises-aplus-test 测试 Promise 是否符合 Promise/A+ 规范
